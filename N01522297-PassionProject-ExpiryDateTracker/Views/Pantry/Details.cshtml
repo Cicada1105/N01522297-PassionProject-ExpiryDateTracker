@@ -1,0 +1,20 @@
+﻿@model N01522297_PassionProject_ExpiryDateTracker.Models.ViewModels.DetailsPantry
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<a href="/Pantry/List">Go Back</a>
+<form>
+    <input type="submit" value="Update Pantry" formaction="/Pantry/Edit/@Model.SelectedPantry.PantryID" formmethod="get" />
+    <input type="submit" value="Delete Pantry" formaction="/Pantry/Delete/@Model.SelectedPantry.PantryID" formmethod="post" />
+</form>
+<h2>@Model.SelectedPantry.PantryName</h2>
+<p><b>Owner: </b>@Model.SelectedPantry.UserFName</p>
+<b>Items:</b>
+<ul>
+    @foreach(var item in Model.StoredItems)
+    {
+        <li><a href="/Item/Details/@item.ItemID">@item.ItemName</a></li>
+    }
+</ul>

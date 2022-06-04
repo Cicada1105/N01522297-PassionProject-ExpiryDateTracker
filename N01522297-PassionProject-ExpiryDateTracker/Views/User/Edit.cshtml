@@ -1,0 +1,18 @@
+﻿@model N01522297_PassionProject_ExpiryDateTracker.Models.User
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit User</h2>
+<form action="/User/Update/@Model.UserID" method="post">
+    <div>
+        <label for="userFirstName">First Name</label>
+        <input id="userFirstName" type="text" name="UserFName" value="@Model.UserFName" />
+    </div>
+    <div>
+        <label for="userLastName">Last Name</label>
+        <input id="userLastName" type="text" name="UserLName" value="@Model.UserLName" />
+    </div>
+    <input type="hidden" name="UserID" value="@Model.UserID" />
+    <input type="submit" value="Update" />
+</form>

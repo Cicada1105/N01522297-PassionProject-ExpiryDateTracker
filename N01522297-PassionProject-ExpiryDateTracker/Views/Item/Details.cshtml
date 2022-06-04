@@ -1,0 +1,16 @@
+﻿@model N01522297_PassionProject_ExpiryDateTracker.Models.ItemDto
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Item Details</h2>
+<a href="/Item/List">Go Back</a>
+<form>
+    <input type="submit" value="Update Item" formaction="/Item/Edit/@Model.ItemID" formmethod="get" />
+    <input type="submit" value="Remove Item" formaction="/Item/Delete/@Model.ItemID" formmethod="post" />
+</form>
+    
+</form>
+<p><b>Name:</b> @Model.ItemName</p>
+<p><b>Expiry: </b> @Model.ItemExpiry</p>
+<p><b>Pantry: </b> @Model.PantryName</p>

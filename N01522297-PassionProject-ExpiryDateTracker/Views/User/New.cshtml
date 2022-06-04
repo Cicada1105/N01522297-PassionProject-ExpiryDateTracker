@@ -1,0 +1,16 @@
+﻿@{
+    ViewBag.Title = "New";
+}
+
+<h2>New User</h2>
+<form action="/User/Create" method="post">
+    <div>
+        <label for="userFirstName">First Name</label>
+        <input id="userFirstName" type="text" name="UserFName" />
+    </div>
+    <div>
+        <label for="userLastName">Last Name</label>
+        <input id="userLastName" type="text" name="UserLName" />
+    </div>
+    <input type="submit" value="Add User" />
+</form>

@@ -1,0 +1,22 @@
+﻿@model IEnumerable<N01522297_PassionProject_ExpiryDateTracker.Models.User>
+@{
+    ViewBag.Title = "New";
+}
+
+<h2>New Pantry</h2>
+<form method="post" action="/Pantry/Create">
+    <div>
+        <label for="pantryName">Name: </label>
+        <input id="pantryName" type="text" name="PantryName" />
+    </div>
+    <div>
+        <label for="pantryUserId">UserID: </label>
+        <select name="UserID">
+            @foreach (var user in Model)
+            {
+                <option value="@user.UserID">@user.UserFName @user.UserLName</option>
+            }
+        </select>
+    </div>
+    <input type="submit" value="Add Pantry" />
+</form>

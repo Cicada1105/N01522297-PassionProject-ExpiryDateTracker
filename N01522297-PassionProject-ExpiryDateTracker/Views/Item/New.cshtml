@@ -1,0 +1,28 @@
+﻿@model IEnumerable<N01522297_PassionProject_ExpiryDateTracker.Models.PantryDto>
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Add New Item to Pantry</h2>
+
+
+<form method="post" action="/Item/Create">
+    <div>
+        <label for="itemName">Name:</label>
+        <input id="itemName" type="text" name="ItemName" />
+    </div>
+    <div>
+        <label for="itemExpiry">Expiry</label>
+        <input id="itemExpiry" type="date" min="@DateTime.Now" name="ItemExpiry" />
+    </div>
+    <div>
+        <label>PantryID</label>
+        <select name="PantryID">
+            @foreach(var pantry in Model)
+            {
+                <option value="@pantry.PantryID">@pantry.PantryName</option>
+            }
+        </select>
+    </div>
+    <input type="submit" value="Add Item" />
+</form>

@@ -1,0 +1,13 @@
+﻿@model IEnumerable<N01522297_PassionProject_ExpiryDateTracker.Models.PantryDto>
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List of Pantries</h2>
+<form method="get" action="/Pantry/New">
+    <input type="submit" value="New Pantry" />
+</form>
+@foreach (var pantry in Model)
+{
+    <p><a href="/Pantry/Details/@pantry.PantryID">@pantry.PantryName</a></p>
+}

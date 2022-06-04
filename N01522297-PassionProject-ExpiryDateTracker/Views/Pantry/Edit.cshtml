@@ -1,0 +1,23 @@
+﻿@model N01522297_PassionProject_ExpiryDateTracker.Models.ViewModels.UpdatePantry
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit Pantry</h2>
+<form method="post" action="/Pantry/Update/@Model.SelectedPantry.PantryID">
+    <div>
+        <label for="pantryName">Name: </label>
+        <input id="pantryName" type="text" name="PantryName" value="@Model.SelectedPantry.PantryName" />
+    </div>
+    <div>
+        <label for="pantryUserId">UserID: </label>
+        <select name="UserID">
+            @foreach (var user in Model.UserOptions)
+            {
+                <option value="@user.UserID">@user.UserFName @user.UserLName</option>
+            }
+        </select>
+    </div>
+    <input type="hidden" name="PantryID" value="@Model.SelectedPantry.PantryID" />
+    <input type="submit" value="Update" />
+</form>
