@@ -3,12 +3,31 @@
     ViewBag.Title = "List";
 }
 
-<h2>List Users</h2>
-<form method="get" action="/User/New">
-    <input type="submit" value="New User" />
+<h2 class="text-center">List Users</h2>
+<form class="text-center" method="get" action="/User/List">
+    <div class="form-group">
+        <label for="userSearch">User First Name:</label>
+        <input id="userSearch" type="text" name="UserSearch" />
+    </div>
+    <input class="btn btn-primary" type="submit" value="Search" />
+    <input class="btn btn-primary" type="submit" value="New User" formaction="/User/New" />
 </form>
-
-@foreach (var user in Model)
-{
-    <p><a href="/User/Details/@user.UserID">@user.UserFName</a></p>
-}
+<table class="table table-hover text-center">
+    <thead>
+        <tr>
+            <th class="text-center">User ID</th>
+            <th class="text-center">User First Name</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.UserID</td>
+            <td>
+                <a href="/User/Details/@user.UserID">@user.UserFName</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

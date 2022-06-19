@@ -16,16 +16,38 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/UserData/ListUsers
+        /// <summary>
+        /// Method for listing all users
+        /// </summary>
+        /// <example>
+        /// GET: api/UserData/ListUsers
+        /// </example>
+        /// <returns>List of User objects</returns>
         [HttpGet]
-        public IEnumerable<User> ListUsers()
+        [Authorize]
+        public IEnumerable<User> ListUsers(string UserSearch = null)
         {
-            return db.CurrentUsers;
+            if (UserSearch == null)
+            {
+                return db.CurrentUsers;
+            }
+            else
+            {
+                return db.CurrentUsers.Where(u => u.UserFName == UserSearch).ToList();
+            }
         }
 
-        // GET: api/UserData/FindUser/2
+        /// <summary>
+        /// Method for retrieving info about a specific user
+        /// </summary>
+        /// <param name="id">Integer value representing the unique id of the user</param>
+        /// <example>
+        /// GET: api/UserData/FindUser/2
+        /// </example>
+        /// <returns>User object of specified user id</returns>
         [ResponseType(typeof(User))]
         [HttpGet]
+        [Authorize]
         public IHttpActionResult FindUser(int id)
         {
             User user = db.CurrentUsers.Find(id);
@@ -37,7 +59,15 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
             return Ok(user);
         }
 
-        // POST: api/UserData/UpdateUser/5
+        /// <summary>
+        /// Method for updating an exisiting user
+        /// </summary>
+        /// <param name="id">Integer value representing the user to be updated</param>
+        /// <param name="user">User object containing info to be updated</param>
+        /// <example>
+        /// POST: api/UserData/UpdateUser/5
+        /// </example>
+        /// <returns>Redirects back to User list view</returns>
         [ResponseType(typeof(void))]
         [HttpPost]
         public IHttpActionResult UpdateUser(int id, User user)
@@ -73,7 +103,14 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/UserData/AddUser
+        /// <summary>
+        /// Method for adding a newly created user to the database
+        /// </summary>
+        /// <param name="user">Newly created User object to be added to the database</param>
+        /// <example>
+        /// POST: api/UserData/AddUser
+        /// </example>
+        /// <returns>Redirects back to User list view</returns>
         [ResponseType(typeof(User))]
         [HttpPost]
         public IHttpActionResult AddUser(User user)
@@ -89,7 +126,14 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
             return CreatedAtRoute("DefaultApi", new { id = user.UserID }, user);
         }
 
-        // POST: api/UserData/DeleteUser/5
+        /// <summary>
+        /// Method for removing a specified user from the database
+        /// </summary>
+        /// <param name="id">Integer value representing the user to remove from the database</param>
+        /// <example>
+        /// POST: api/UserData/DeleteUser/5
+        /// </example>
+        /// <returns>Redirects back to User list view</returns>
         [ResponseType(typeof(User))]
         [HttpPost]
         public IHttpActionResult DeleteUser(int id)

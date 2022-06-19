@@ -2,15 +2,15 @@
     ViewBag.Title = "New";
 }
 
-<h2>New User</h2>
-<form action="/User/Create" method="post">
-    <div>
+<h2 class="text-center">New User</h2>
+<form class="text-center" action="/User/Create" method="post">
+    <div class="form-group form-inline">
         <label for="userFirstName">First Name</label>
-        <input id="userFirstName" type="text" name="UserFName" />
+        <input id="userFirstName" class="form-control" type="text" name="UserFName" />
     </div>
-    <div>
+    <div class="form-group form-inline">
         <label for="userLastName">Last Name</label>
-        <input id="userLastName" type="text" name="UserLName" />
+        <input id="userLastName" class="form-control" type="text" name="UserLName" />
     </div>
-    <input type="submit" value="Add User" />
+    <input class="btn btn-primary" type="submit" value="Add User" />
 </form>

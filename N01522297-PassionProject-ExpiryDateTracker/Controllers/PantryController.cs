@@ -19,14 +19,39 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
 
         static PantryController()
         {
-            client = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                UseCookies = false
+            };
+
+            client = new HttpClient(handler);
             client.BaseAddress = new Uri("https://localhost:44332/api/");
         }
-        // GET: Pantry/List
-        public ActionResult List()
+        private void GetApplicationCookie()
         {
+            string token = "";
+            client.DefaultRequestHeaders.Remove("Cookie");
+            if (!User.Identity.IsAuthenticated) return;
+
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+            if (token != "") client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+
+            return;
+        }
+        // GET: Pantry/List
+        [Authorize]
+        public ActionResult List(string PantrySearch = null)
+        {
+            GetApplicationCookie();
             // Define url path that the ListPantries API Endpoint
             string url = "PantryData/ListPantries";
+
+            if (PantrySearch != null)
+            {
+                url += "?PantrySearch=" + PantrySearch;
+            }
 
             // Send request to API
             HttpResponseMessage resp = client.GetAsync(url).Result;
@@ -38,8 +63,10 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
         }
 
         // GET: Pantry/Details/5
+        [Authorize]
         public ActionResult Details(int id)
         {
+            GetApplicationCookie();
             // Create a DetailsPantry ViewModel for storing retrieved pantry details and the items belonging to that pantry
             DetailsPantry pantryVM = new DetailsPantry();
 
@@ -63,14 +90,17 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
             // Send the newly found PantryDto to the view
             return View(pantryVM);
         }
+        [Authorize]
         public ActionResult Error()
         {
             return View();
         }
 
         // GET: Pantry/New
+        [Authorize]
         public ActionResult New()
         {
+            GetApplicationCookie();
             // Retrieve the Users to allow the user to select from one
             string url = "UserData/ListUsers";
 
@@ -85,8 +115,10 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
 
         // POST: Pantry/Create
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Pantry newPantry)
         {
+            GetApplicationCookie();
             // Define url path to the AddPantry API Endpoint
             string url = "PantryData/AddPantry";
 
@@ -110,8 +142,10 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
         }
 
         // GET: Pantry/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
+            GetApplicationCookie();
             // Create a new instance of the UpdatePantry ViewModel
             UpdatePantry pantryVM = new UpdatePantry();
 
@@ -139,8 +173,10 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
 
         // POST: Pantry/Update/5
         [HttpPost]
+        [Authorize]
         public ActionResult Update(int id, Pantry updatedPantry)
         {
+            GetApplicationCookie();
             // Define url path associated with the API Endpoint for updating a pantry
             string url = $"PantryData/UpdatePantry/{id}";
 
@@ -165,6 +201,7 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
         }
 
         // GET: Pantry/Remove/5
+        [Authorize]
         public ActionResult Remove(int id)
         {
             return View();
@@ -172,8 +209,10 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
 
         // POST: Pantry/Delete/5
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            GetApplicationCookie();
             // Define url path to the API Endpoint for deleting a pantry
             string url = $"PantryData/DeletePantry/{id}";
 

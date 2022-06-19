@@ -3,18 +3,26 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2 class="text-center">Details</h2>
 <a href="/User/List">Go Back</a>
-<form>
-    <input type="submit" value="Update User" formaction="/User/Edit/@Model.SelectedUser.UserID" formmethod="get" />
-    <input type="submit" value="Delete User" formaction="/User/Delete/@Model.SelectedUser.UserID" formmethod="post" />
+<form class="text-center">
+    <input class="btn btn-primary" type="submit" value="Update User" formaction="/User/Edit/@Model.SelectedUser.UserID" formmethod="get" />
+    <input class="btn btn-primary" type="submit" value="Delete User" formaction="/User/Delete/@Model.SelectedUser.UserID" formmethod="post" />
 </form>
-<h2>@Model.SelectedUser.UserFName @Model.SelectedUser.UserLName's Pantries</h2>
-<ul>
-    @foreach(var pantry in Model.OwnedPantries)
-    {
-        <li>
-            <a href="/Pantry/Details/@pantry.PantryID">@pantry.PantryName</a>
-        </li>
-    }
-</ul>
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h2 class="panel-title">@Model.SelectedUser.UserFName @Model.SelectedUser.UserLName's Pantries</h2>
+    </div>
+    <table class="table">
+        <tbody>
+            @foreach (var pantry in Model.OwnedPantries)
+            {
+                <tr>
+                    <td class="list-group-item">
+                        <a href="/Pantry/Details/@pantry.PantryID">@pantry.PantryName</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

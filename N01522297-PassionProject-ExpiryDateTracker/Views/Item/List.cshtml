@@ -3,10 +3,37 @@
     ViewBag.Title = "List";
 }
 
-<h2>List of Items</h2>
-<form method="get" action="/Item/New">
-    <input type="submit" value="New Item" />
+<h2 class="text-center">List of Items</h2>
+<form class="text-center" method="get" action="/Item/List">
+    <div class="form-group">
+        <label for="itemSearch">Item Name:</label>
+        <input id="itemSearch" type="text" name="ItemSearch" />
+    </div>
+    <input class="btn btn-primary" type="submit" value="Search" />
+    <input class="btn btn-primary" type="submit" formaction="/Item/New" value="New Item" />
 </form>
-@foreach(var item in Model) {
-    <p><a href="/Item/Details/@item.ItemID">@item.ItemName</a> - @item.PantryName</p>
-}
+<table class="table table-hover text-center">
+    <thead>
+        <tr>
+            <th class="text-center">Item ID</th>
+            <th class="text-center">Item Name</th>
+            <th class="text-center">Pantry Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.ItemID
+                </td>
+                <td>
+                    <a href="/Item/Details/@item.ItemID">@item.ItemName</a>
+                </td>
+                <td>
+                    @item.PantryName
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

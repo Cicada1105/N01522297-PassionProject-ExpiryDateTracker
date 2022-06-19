@@ -19,14 +19,41 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
         
         static UserController()
         {
-            client = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                UseCookies = false
+            };
+
+            client = new HttpClient(handler);
             client.BaseAddress = new Uri("https://localhost:44332/api/");
         }
-        // GET: User/List
-        public ActionResult List()
+
+        private void GetApplicationCookie()
         {
+            string token = "";
+            client.DefaultRequestHeaders.Remove("Cookie");
+            if (!User.Identity.IsAuthenticated) return;
+
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+            if (token != null) client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+
+            return;
+        }
+
+        // GET: User/List
+        [Authorize]
+        public ActionResult List(string UserSearch = null)
+        {
+            GetApplicationCookie();
             // Define url path that the ListUsers API Endpoint
             string url = "UserData/ListUsers";
+
+            if (UserSearch != null)
+            {
+                url += "?UserSearch=" + UserSearch;
+            }
 
             // Send request to API
             HttpResponseMessage resp = client.GetAsync(url).Result;
@@ -37,8 +64,10 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
         }
 
         // GET: User/Details/5
+        [Authorize]
         public ActionResult Details(int id)
         {
+            GetApplicationCookie();
             // Create a new instance of the DetailsUser ViewModel to store user details and the pantries they own
             DetailsUser userVM = new DetailsUser();
 
@@ -63,12 +92,14 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
             // Send the ViewModel to the view
             return View(userVM);
         }
+        [Authorize]
         public ActionResult Error()
         {
             return View();
         }
 
         // GET: User/New
+        [Authorize]
         public ActionResult New()
         {
             return View();
@@ -76,8 +107,10 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
 
         // POST: User/Create
         [HttpPost]
+        [Authorize]
         public ActionResult Create(User newUser)
         {
+            GetApplicationCookie();
             // Define url path to the AddUser API Endpoint
             string url = "UserData/AddUser";
 
@@ -102,8 +135,10 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
         }
 
         // GET: User/Edit/5
+        [Authorize]
         public ActionResult Edit(int id)
         {
+            GetApplicationCookie();
             // Define the url path to the corresponding API Endpoint for the FindUser
             string url = $"UserData/FindUser/{id}";
 
@@ -118,8 +153,10 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
 
         // POST: User/Update/5
         [HttpPost]
+        [Authorize]
         public ActionResult Update(int id, User updatedUser)
         {
+            GetApplicationCookie();
             // Define url path associated with the API Endpoint for updating a user
             string url = $"UserData/UpdateUser/{id}";
 
@@ -144,6 +181,7 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
         }
 
         // GET: User/Remove/5
+        [Authorize]
         public ActionResult Remove(int id)
         {
             return View();
@@ -151,8 +189,10 @@ namespace N01522297_PassionProject_ExpiryDateTracker.Controllers
 
         // POST: User/Delete/5
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id, FormCollection collection)
         {
+            GetApplicationCookie();
             // Define url path to the API Endpoint for deleting a user
             string url = $"UserData/DeleteUser/{id}";
             // Format post data to be HTTP readable

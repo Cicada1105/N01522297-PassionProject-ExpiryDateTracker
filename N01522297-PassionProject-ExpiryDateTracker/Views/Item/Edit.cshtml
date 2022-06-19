@@ -3,20 +3,20 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit Item</h2>
+<h2 class="text-center">Edit Item</h2>
 
-<form method="post" action="/Item/Update/@Model.SelectedItem.ItemID">
-    <div>
-        <label>Name:</label>
-        <input type="text" name="ItemName" value="@Model.SelectedItem.ItemName" />
+<form class="text-center" method="post" action="/Item/Update/@Model.SelectedItem.ItemID">
+    <div class="form-group">
+        <label for="itemName">Name:</label>
+        <input id="itemName" type="text" name="ItemName" value="@Model.SelectedItem.ItemName" />
     </div>
-    <div>
-        <label>Expiry</label>
-        <input type="date" min="@DateTime.Now" name="ItemExpiry" value='@Model.SelectedItem.ItemExpiry.ToUniversalTime().ToString("u").Split(' ')[0]' />
+    <div class="form-group">
+        <label for="itemExpiry">Expiry</label>
+        <input id="itemExpiry"  type="date" min="@DateTime.Now" name="ItemExpiry" value='@Model.SelectedItem.ItemExpiry.ToUniversalTime().ToString("u").Split(' ')[0]' />
     </div>
-    <div>
-        <label>PantryID</label>
-        <select name="PantryID">
+    <div class="form-group">
+        <label for="pantryID">PantryID</label>
+        <select id="pantryID"  name="PantryID">
             @foreach (var pantry in Model.PantryOptions)
             {
                 <option value="@pantry.PantryID">@pantry.PantryName</option>
@@ -24,5 +24,5 @@
         </select>
     </div>
     <input type="hidden" name="ItemID" value="@Model.SelectedItem.ItemID" />
-    <input type="submit" value="Update" />
+    <input class="btn btn-primary"  type="submit" value="Update" />
 </form>

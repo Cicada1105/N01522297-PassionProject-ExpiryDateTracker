@@ -3,11 +3,31 @@
     ViewBag.Title = "List";
 }
 
-<h2>List of Pantries</h2>
-<form method="get" action="/Pantry/New">
-    <input type="submit" value="New Pantry" />
+<h2 class="text-center">List of Pantries</h2>
+<form class="text-center" method="get" action="/Pantry/List">
+    <div class="form-group">
+        <label for="pantrySearch">Pantry Name:</label>
+        <input id="pantrySearch" type="text" name="PantrySearch" />
+    </div>
+    <input class="btn btn-primary" type="submit" value="Search" />
+    <input class="btn btn-primary" type="submit" value="New Pantry" formaction="/Pantry/New" />
 </form>
-@foreach (var pantry in Model)
-{
-    <p><a href="/Pantry/Details/@pantry.PantryID">@pantry.PantryName</a></p>
-}
+<table class="table table-hover text-center">
+    <thead>
+        <tr>
+            <th class="text-center">Pantry ID</th>
+            <th class="text-center">Pantry Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pantry in Model)
+        {
+            <tr>
+                <td>@pantry.PantryID</td>
+                <td>
+                    <a href="/Pantry/Details/@pantry.PantryID">@pantry.PantryName</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

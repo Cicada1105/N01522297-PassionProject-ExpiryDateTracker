@@ -3,18 +3,30 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2 class="text-center">Details</h2>
 <a href="/Pantry/List">Go Back</a>
-<form>
-    <input type="submit" value="Update Pantry" formaction="/Pantry/Edit/@Model.SelectedPantry.PantryID" formmethod="get" />
-    <input type="submit" value="Delete Pantry" formaction="/Pantry/Delete/@Model.SelectedPantry.PantryID" formmethod="post" />
+<form class="text-center">
+    <input class="btn btn-primary" type="submit" value="Update Pantry" formaction="/Pantry/Edit/@Model.SelectedPantry.PantryID" formmethod="get" />
+    <input class="btn btn-primary" type="submit" value="Delete Pantry" formaction="/Pantry/Delete/@Model.SelectedPantry.PantryID" formmethod="post" />
 </form>
-<h2>@Model.SelectedPantry.PantryName</h2>
-<p><b>Owner: </b>@Model.SelectedPantry.UserFName</p>
-<b>Items:</b>
-<ul>
-    @foreach(var item in Model.StoredItems)
-    {
-        <li><a href="/Item/Details/@item.ItemID">@item.ItemName</a></li>
-    }
-</ul>
+
+<p><b>Owner:</b>@Model.SelectedPantry.UserFName</p>
+
+<div class="panel panel-info">
+    <div class="panel-heading">
+        <h3 class="panel-title">@Model.SelectedPantry.PantryName</h3>
+    </div>
+    <table class="table">
+        <tbody>
+            @foreach (var item in Model.StoredItems)
+            {
+                <tr>
+                    <td>
+                        <a href="/Item/Details/@item.ItemID">@item.ItemName</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+</div>

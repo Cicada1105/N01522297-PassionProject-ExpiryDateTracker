@@ -3,15 +3,15 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit Pantry</h2>
-<form method="post" action="/Pantry/Update/@Model.SelectedPantry.PantryID">
-    <div>
+<h2 class="text-center">Edit Pantry</h2>
+<form class="text-center" method="post" action="/Pantry/Update/@Model.SelectedPantry.PantryID">
+    <div class="form-group form-inline">
         <label for="pantryName">Name: </label>
-        <input id="pantryName" type="text" name="PantryName" value="@Model.SelectedPantry.PantryName" />
+        <input id="pantryName" class="form-control" type="text" name="PantryName" value="@Model.SelectedPantry.PantryName" />
     </div>
-    <div>
+    <div class="form-group form-inline">
         <label for="pantryUserId">UserID: </label>
-        <select name="UserID">
+        <select id="pantryUserId" class="form-control" name="UserID">
             @foreach (var user in Model.UserOptions)
             {
                 <option value="@user.UserID">@user.UserFName @user.UserLName</option>
@@ -19,5 +19,5 @@
         </select>
     </div>
     <input type="hidden" name="PantryID" value="@Model.SelectedPantry.PantryID" />
-    <input type="submit" value="Update" />
+    <input class="btn btn-primary" type="submit" value="Update" />
 </form>

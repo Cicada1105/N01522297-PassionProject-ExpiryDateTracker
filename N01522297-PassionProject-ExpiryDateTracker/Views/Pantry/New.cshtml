@@ -3,20 +3,20 @@
     ViewBag.Title = "New";
 }
 
-<h2>New Pantry</h2>
-<form method="post" action="/Pantry/Create">
-    <div>
+<h2 class="text-center">New Pantry</h2>
+<form class="text-center" method="post" action="/Pantry/Create">
+    <div class="form-group form-inline">
         <label for="pantryName">Name: </label>
-        <input id="pantryName" type="text" name="PantryName" />
+        <input id="pantryName" class="form-control" type="text" name="PantryName" />
     </div>
-    <div>
+    <div class="form-group form-inline">
         <label for="pantryUserId">UserID: </label>
-        <select name="UserID">
+        <select class="form-control" name="UserID">
             @foreach (var user in Model)
             {
                 <option value="@user.UserID">@user.UserFName @user.UserLName</option>
             }
         </select>
     </div>
-    <input type="submit" value="Add Pantry" />
+    <input class="btn btn-primary" type="submit" value="Add Pantry" />
 </form>

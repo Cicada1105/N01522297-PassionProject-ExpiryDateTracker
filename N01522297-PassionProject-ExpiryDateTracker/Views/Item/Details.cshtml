@@ -3,14 +3,32 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Item Details</h2>
+<h2 class="text-center">Item Details</h2>
 <a href="/Item/List">Go Back</a>
-<form>
-    <input type="submit" value="Update Item" formaction="/Item/Edit/@Model.ItemID" formmethod="get" />
-    <input type="submit" value="Remove Item" formaction="/Item/Delete/@Model.ItemID" formmethod="post" />
+
+<table class="table table-hover text-center">
+    <thead>
+        <tr>
+            <th class="text-center">Name</th>
+            <th class="text-center">Pantry</th>
+            <th class="text-center">Expiry</th>
+            <th class="text-center">Days Until Expiry</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Model.ItemName</td>
+            <td>@Model.PantryName</td>
+            <td>@Model.ItemExpiry</td>
+            <td>@{
+                string output = Model.ItemExpiry.CompareTo(System.DateTime.Now) < 0 ? "Expired!" : Model.ItemExpiry.Subtract(System.DateTime.Now).Days + " days";
+                @output;
+            }</td>
+        </tr>
+    </tbody>
+</table>
+
+<form class="text-center">
+    <input class="btn btn-primary" type="submit" value="Update Item" formaction="/Item/Edit/@Model.ItemID" formmethod="get" />
+    <input class="btn btn-primary" type="submit" value="Remove Item" formaction="/Item/Delete/@Model.ItemID" formmethod="post" />
 </form>
-    
-</form>
-<p><b>Name:</b> @Model.ItemName</p>
-<p><b>Expiry: </b> @Model.ItemExpiry</p>
-<p><b>Pantry: </b> @Model.PantryName</p>
